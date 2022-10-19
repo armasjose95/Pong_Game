@@ -4,16 +4,36 @@
   box-sizing: border-box; /* Makes sizing my width & height easier */
 }
 
+:root {
+  /* Where we can put css vairables that go across our entire application */
+  /* HSL Color Format*/
+  --hue: 200; /* Blue, modifying this in our JS*/
+  --saturation: 50%;
+  /* Get hue and saturation portion and specify our lightness value(75% because we want our fground color to be a very light color*/
+  --foreground-color: hsl(var(--hue), var(--saturation), 75%);
+  --background-color: hsl(
+    var(--hue),
+    var(--saturation),
+    20%
+  ); /* Much darker at 20% */
+}
+
 body {
   margin: 0;
-  background-color: #333;
+  background-color: var(--background-color);
 }
 
 .paddle {
+  --position: 50; /* Setting this & changing this in our JS (css variable) */
   position: absolute;
-  background-color: white;
-  width: 1vh;
-  height: 10vh;
+  background-color: var(--foreground-color);
+  /* Top of paddle is Positioned in the center */
+  /* Use that variable(position)& convert that to a vh value using CALC */
+  top: calc(var(--position) * 1vh);
+  /* Moves it back up half of its own height. Middle of paddle is Positioned in the center of the screen. Y axis is vertical */
+  transform: translateY(-50%);
+  width: 1vh; /* Paddle is always 10x higher than it is wide */
+  height: 10vh; /* Using vh because I want the paddle to be 10% of the screen, no matter what size screen we play on */
 }
 
 .paddle.left {
