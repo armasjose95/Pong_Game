@@ -1,0 +1,25 @@
+*,
+*::after,
+::before {
+  box-sizing: border-box; /* Makes sizing my width & height easier */
+}
+
+body {
+  margin: 0;
+  background-color: #333;
+}
+
+.paddle {
+  position: absolute;
+  background-color: white;
+  width: 1vh;
+  height: 10vh;
+}
+
+.paddle.left {
+  left: 1vw; /* One percent of the screen width away from the left-hand side */
+}
+
+.paddle.right {
+  right: 1vw; /* One percent of the screen width away from the right-hand side */
+}
