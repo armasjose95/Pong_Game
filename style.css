@@ -43,3 +43,40 @@ body {
 .paddle.right {
   right: 1vw; /* One percent of the screen width away from the right-hand side */
 }
+
+.ball {
+  --x: 50; /* Start at 50 to start at the center */
+  --y: 50; /* Start at 50 to start at the center */
+  position: absolute;
+  background-color: var(--foreground-color);
+  /* Top of paddle is Positioned in the center */
+  /* Use that variable(position)& convert that to a vh value using CALC */
+  left: calc(var(--x) * 1vw);
+  top: calc(var(--y) * 1vh);
+  border-radius: 50%; /* Makes it a circle */
+  /* perfect dead center, -50% in x and y direction */
+  transform: translateY(-50%, -50%);
+  width: 2.5vh; /* perfect circle  */
+  height: 2.5vh; /* perfect circle */
+}
+
+.score {
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 7vh; /* Make it scale with screen size */
+  color: var(--foreground-color); /* Color changes alongside color of paddles */
+}
+
+#player-score {
+  /* Makes sure one half of screen is taken up by one score and the other half of the screen has the other score */
+  flex-grow: 1;
+  flex-basis: 0;
+  text-align: right; /* Makes sure 1st score is next to computer score */
+}
+
+#computer-score {
+  /* Makes sure one half of screen is taken up by one score and the other half of the screen has the other score */
+  flex-grow: 1;
+  flex-basis: 0;
+}
