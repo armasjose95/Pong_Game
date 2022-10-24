@@ -24,7 +24,8 @@ function update(time){
     if (lastTime != null) {
         const delta = time - lastTime
         //Update Code happening here only if we have a last time. We just set our lastTime and call it again the 1st time.
-        console.log(delta)
+        //important to use that delta to make sure all of our movements in our game are based on that because delta flucutaes
+        ball.update(delta) 
     }
     lastTime = time
     window.requestAnimationFrame(update)
