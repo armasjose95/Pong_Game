@@ -60,8 +60,9 @@ export default class Ball{  //naming class called ball
 
     
     update(delta) {  //update function that takes in a delta. What are we updating? x&y position, velocity, direction
-        this.x = 5 //5% from the left
-        this.y = 15 //15% from the top
+        //Direction x is going on * this.velocity. * delta because to void long delays/pauses between frames
+        this.x += this.direction.x * this.velocity * delta 
+        this.y += this.direction.y * this.velocity * delta 
     }
 }
 
