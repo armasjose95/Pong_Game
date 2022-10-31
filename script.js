@@ -7,11 +7,14 @@
 */
 
 import Ball from "./Ball.js" //imported filed from ball.js
+import Paddle from "./Paddle.js"
 
 /*selecting the ball HTML element and creating a new class for that ball & now have access to it here & can use inside 
 our update loop
 */
 const ball = new Ball(document.getElementById("ball")) 
+const playerPaddle = new Paddle(document.getElementById("player-paddle"))
+const computerPaddle = new Paddle(document.getElementById("computer-paddle"))
 
 let lastTime
 //update loop is going to take in a time variable for how much time has passed since the start of our program
@@ -25,11 +28,19 @@ function update(time){
         const delta = time - lastTime
         //Update Code happening here only if we have a last time. We just set our lastTime and call it again the 1st time.
         //important to use that delta to make sure all of our movements in our game are based on that because delta flucutaes
-        ball.update(delta) 
+        //ball.update(delta) 
     }
     lastTime = time
     window.requestAnimationFrame(update)
 } 
+
+
+document.addEventListener("mousemove", e => { // y poistion of paddle is the same as our mouse 
+    //convert to a value between 0&1 and value between 0&100(part)
+    //convert from a pixel value to a percentage
+    playerPaddle.position = (e.y / window.innerHeight) * 100 // event object has a y property
+})
+
 
 /*In order to call update(time) function
 -With requestAnimationFrame is every time that you can change what's on the screen, this function is going to be called.

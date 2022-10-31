@@ -1,4 +1,5 @@
 const INITIAL_VELOCITY = .025 // not too slow but fast enough so not boring
+const VELOCITY_INCREASE = .00001 //increase by a very small amount but gets faster each hit
 
 export default class Ball{  //naming class called ball
     constructor(ballElem) {
@@ -32,6 +33,14 @@ export default class Ball{  //naming class called ball
     }
 
 
+
+    rect() {
+        return this.ballElem.getBoundingClientRect()
+    }
+
+
+
+
     reset() { //helper function. Allows us to set all those propertie, so when we create a ball, we call that reset function
         this.x = 50 //default values
         this.y = 50 //default values
@@ -63,6 +72,18 @@ export default class Ball{  //naming class called ball
         //Direction x is going on * this.velocity. * delta because to void long delays/pauses between frames
         this.x += this.direction.x * this.velocity * delta 
         this.y += this.direction.y * this.velocity * delta 
+        //multiply our velocity by some kind increasing value.Include delta so that it scales with the frame times
+        this.velocity += VELOCITY_INCREASE * delta
+        const rect = this.rect()
+
+        //rect.bottom/top window.innerHeight means we've gone past the bottom of our screen or top of our screen
+        if (rect.bottom >= window.innerHeight ||rect.top <= 0 ) {
+            this.direction.y *= -1 //flipping the y direction when we hit the top to go downwards or hit bottom and go up
+        }
+
+        if (rect.right >= window.innerWidth ||rect.left <= 0 ) {
+            this.direction.x *= -1 //flipping the x direction when we hit right to go left or hit left and go right
+        }
     }
 }
 
