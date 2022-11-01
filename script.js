@@ -15,6 +15,8 @@ our update loop
 const ball = new Ball(document.getElementById("ball")) 
 const playerPaddle = new Paddle(document.getElementById("player-paddle"))
 const computerPaddle = new Paddle(document.getElementById("computer-paddle"))
+const playerScoreElem = document.getElementById("player-score")
+const computerScoreElem = document.getElementById("computer-score")
 
 let lastTime
 //update loop is going to take in a time variable for how much time has passed since the start of our program
@@ -29,10 +31,34 @@ function update(time){
         //Update Code happening here only if we have a last time. We just set our lastTime and call it again the 1st time.
         //important to use that delta to make sure all of our movements in our game are based on that because delta flucutaes
         //ball.update(delta) 
+        //pass in y position of our ball because the paddle needs to know where the ball is to move to that position
+        computerPaddle.update(delta, ball.y)
+
+        if(isLose()) handleLose() //resets game back to where it was before
     }
+
+
     lastTime = time
     window.requestAnimationFrame(update)
-} 
+}
+
+
+function isLose() { //return as a variable
+    const rect = ball.rect()
+    return rect.right >= window.innerWidth ||rect.left <= 0 // is our ball out of bounds on r or l side?
+}
+
+
+function handleLose() {
+    const rect = ball.rect()
+    if (rect.right >= window.innerWidth) { // if ball hits r side of the screen, pt for user player
+        //parse an integer vers. of the text that's in there rn and add 1 to score
+        playerScoreElem.textContent = parseInt(playerScoreElem.textContent) +1 
+    }
+    ball.reset()
+    computerPaddle.reset() 
+}
+
 
 
 document.addEventListener("mousemove", e => { // y poistion of paddle is the same as our mouse 
