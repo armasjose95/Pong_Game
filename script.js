@@ -30,9 +30,14 @@ function update(time){
         const delta = time - lastTime
         //Update Code happening here only if we have a last time. We just set our lastTime and call it again the 1st time.
         //important to use that delta to make sure all of our movements in our game are based on that because delta flucutaes
-        //ball.update(delta) 
+        ball.update(delta, [playerPaddle.rect(), computerPaddle.rect()]) // both of our rectangles passed into the ball
         //pass in y position of our ball because the paddle needs to know where the ball is to move to that position
         computerPaddle.update(delta, ball.y)
+        //selects our root element that has the hue variable inside of it
+       const hue = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hue"))
+
+       //slowly changing our hue by a very small amount every time that our frame changes
+       document.documentElement.style.setProperty("--hue", hue + delta * .01)
 
         if(isLose()) handleLose() //resets game back to where it was before
     }
@@ -54,7 +59,11 @@ function handleLose() {
     if (rect.right >= window.innerWidth) { // if ball hits r side of the screen, pt for user player
         //parse an integer vers. of the text that's in there rn and add 1 to score
         playerScoreElem.textContent = parseInt(playerScoreElem.textContent) +1 
+    } else {
+        computerScoreElem.textContent = parseInt(computerScoreElem.textContent) +1 //pt if computer wins
     }
+
+    
     ball.reset()
     computerPaddle.reset() 
 }

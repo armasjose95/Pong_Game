@@ -3,6 +3,7 @@ const SPEED = .02 //set up computer to have a max speed
 export default class Paddle {
     constructor(paddleElem) {
         this.paddleElem = paddleElem
+        this.reset()
     }
 
     get position() {
@@ -14,6 +15,18 @@ export default class Paddle {
         //Position property and set it to a value which gets passed into set position
         this.paddleElem.style.setProperty("--position", value) 
     }
+
+
+    rect() {
+        return this.paddleElem.getBoundingClientRect()
+    }
+
+
+    reset() {
+        this.position = 50 //resets paddle back to the middle after each point
+    } 
+
+
 
     update(delta, ballHeight) {
         //paddle moves to exactly where the ball is, but computer would always win

@@ -68,7 +68,7 @@ export default class Ball{  //naming class called ball
 
 
     
-    update(delta) {  //update function that takes in a delta. What are we updating? x&y position, velocity, direction
+    update(delta, paddleRects) {  //update function that takes in a delta. What are we updating? x&y position, velocity, direction
         //Direction x is going on * this.velocity. * delta because to void long delays/pauses between frames
         this.x += this.direction.x * this.velocity * delta 
         this.y += this.direction.y * this.velocity * delta 
@@ -81,7 +81,8 @@ export default class Ball{  //naming class called ball
             this.direction.y *= -1 //flipping the y direction when we hit the top to go downwards or hit bottom and go up
         }
 
-        if (rect.right >= window.innerWidth ||rect.left <= 0 ) {
+        //loops in all our paddle rectangles. If any return true for isCollision function,returns treu for entire thing
+        if (paddleRects.some(r => isCollision(r, rect))) {
             this.direction.x *= -1 //flipping the x direction when we hit right to go left or hit left and go right
         }
     }
@@ -93,4 +94,10 @@ function randomNumberBetween(min, max) {
     sure the min is the lowest # we can get. 
     */
     return Math.random() * (max - min) + min
+}
+
+
+//if we have a collision with any of our paddles, we swap our x direction
+function isCollision(rect1, rect2) {
+    return (rect1.left <= rect2.right && rect1.right >= rect2.left && rect1.top <= rect2.bottom && rect1.bottom >= rect2.top)
 }
